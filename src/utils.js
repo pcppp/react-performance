@@ -25,7 +25,7 @@ function useAsync(initialState) {
     ...initialState,
   })
   const [{status, data, error}, setState] = React.useReducer(
-    (s, a) => ({...s, ...a}),
+    (s, a) => ({...s, ...a}), // 第一个参数为当前的state，第二个参数为传入的值（action），用于更改state或其他操作
     initialStateRef.current,
   )
 
@@ -53,15 +53,18 @@ function useAsync(initialState) {
     [safeSetState],
   )
 
-  const setData = React.useCallback(data => safeSetState({data}), [
-    safeSetState,
-  ])
-  const setError = React.useCallback(error => safeSetState({error}), [
-    safeSetState,
-  ])
-  const reset = React.useCallback(() => safeSetState(initialStateRef.current), [
-    safeSetState,
-  ])
+  const setData = React.useCallback(
+    data => safeSetState({data}),
+    [safeSetState],
+  )
+  const setError = React.useCallback(
+    error => safeSetState({error}),
+    [safeSetState],
+  )
+  const reset = React.useCallback(
+    () => safeSetState(initialStateRef.current),
+    [safeSetState],
+  )
 
   return {
     // using the same names that react-query uses for convenience

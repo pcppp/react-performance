@@ -25,7 +25,7 @@ function App() {
           checked={showGlobe}
           onChange={e => setShowGlobe(e.target.checked)}
         />
-        {' show globe'}
+        {'show globe'}
       </label>
       <div style={{width: 400, height: 400}}>
         <React.Suspense fallback={<div>Loading...</div>}>
