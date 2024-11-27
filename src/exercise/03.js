@@ -21,8 +21,8 @@ function Menu({
           getItemProps={getItemProps}
           item={item}
           index={index}
-          selectedItem={selectedItem}
-          highlightedIndex={highlightedIndex}
+          isSelected={selectedItem?.id === item.id}
+          isHighlighted={highlightedIndex === index}
         >
           {item.name}
         </ListItem>
@@ -30,18 +30,15 @@ function Menu({
     </ul>
   )
 }
-// 🐨 Memoize the Menu here using React.memo
-
+Menu = React.memo(Menu)
 function ListItem({
   getItemProps,
   item,
   index,
-  selectedItem,
-  highlightedIndex,
+  isSelected,
+  isHighlighted,
   ...props
 }) {
-  const isSelected = selectedItem?.id === item.id
-  const isHighlighted = highlightedIndex === index
   return (
     <li
       {...getItemProps({
@@ -56,7 +53,27 @@ function ListItem({
     />
   )
 }
-// 🐨 Memoize the ListItem here using React.memo
+ListItem = React.memo(ListItem)
+// ListItem = React.memo(ListItem, (pre, next) => {
+//   if (pre.item !== next.item) {
+//     return false
+//   }
+//   if (pre.index !== next.index) {
+//     return false
+//   }
+//   if (pre.selectedItem !== next.selectedItem) {
+//     return false
+//   }
+//   if (pre.getItemProps !== next.getItemProps) {
+//     return false
+//   }
+//   if (pre.highlightedIndex !== next.highlightedIndex) {
+//     const wasPreHighlight = pre.highlightedIndex === pre.index
+//     const isNextHighlight = next.highlightedIndex === next.index
+//     return wasPreHighlight === isNextHighlight
+//   }
+//   return true
+// })
 
 function App() {
   const forceRerender = useForceRerender()
